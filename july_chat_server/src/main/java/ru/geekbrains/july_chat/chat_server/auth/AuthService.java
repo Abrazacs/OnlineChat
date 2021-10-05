@@ -1,7 +1,5 @@
 package ru.geekbrains.july_chat.chat_server.auth;
 
-import java.sql.SQLException;
-
 public interface AuthService {
     void start();
     void stop();

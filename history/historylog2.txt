@@ -1,0 +1,44 @@
+
+[ME] qweqwe
+[nick2]: qweqwe
+[ME] qweqwe
+[nick2]: qweqwe
+[ME] qweqwe
+[nick2]: qweqwe
+[ME] qwe
+[nick2]: qwe
+[ME] qwe
+[nick2]: qwe
+[ME] qwer
+[nick2]: qwer
+[ME] wfqweq
+[nick2]: wfqweq
+[ME] ewrew
+[nick2]: ewrew
+[ME] qfdqfewr
+[nick2]: qfdqfewr
+[ME] rewrew
+[nick2]: rewrew
+[ME] ewrqwe
+[nick2]: ewrqwe
+[nick1]: qwer
+[nick1]: wqrwerq
+[nick1]: rqew
+[nick1] -> [nick2]: sdfadsf
+[nick1] -> [nick2]: fdafsd
+[nick1] -> [nick2]: sdfasdfdsfasdd
+[ME] qweer
+[nick2]: qweer
+[ME] ewrqewrew
+[nick2] -> [nick1]: ewrqewrew
+[ME] weqr
+[nick2] -> [nick1]: weqr
+[ME] qwer
+[nick2] -> [nick1]: qwer
+[nick1] -> [nick2]: weqrewr
+[nick1] -> [nick2]: qwer
+[nick1] -> [nick2]: qewr
+[nick1] -> [nick2]: qewr
+[nick1] -> [nick2]: qewr
+[nick1]: qwerqewr
+[nick1]: qwerqewr
