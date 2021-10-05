@@ -9,6 +9,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class JulyChatServer {
     private static final int PORT = 8089;
@@ -22,7 +25,8 @@ public class JulyChatServer {
     }
 
     public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        try (ServerSocket serverSocket = new ServerSocket(PORT)){
             System.out.println("Server start!");
             while (true) {
                 System.out.println("Waiting for connection......");
@@ -30,7 +34,7 @@ public class JulyChatServer {
                 long connectionTime = System.currentTimeMillis();
                 System.out.println("Client connected");
                 System.out.println(connectionTime);
-                new ChatClientHandler(socket, this, connectionTime).handle();
+                executor.execute(()->{new ChatClientHandler(socket, this, connectionTime).handle();});
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -31,20 +31,17 @@ public class ChatClientHandler {
     }
 
     public void handle() {
-        handlerThread = new Thread(() -> {
-            authorize();
-                try {
-                    while (!Thread.currentThread().isInterrupted() && socket.isConnected()) {
-                        String message = in.readUTF();
-                        handleMessage(message);
-                    }
-                } catch (IOException e) {
-                     e.printStackTrace();
-                } finally {
-                    server.removeAuthorizedClientFromList(this);
-                }
-        });
-        handlerThread.start();
+        authorize();
+        try {
+            while (!Thread.currentThread().isInterrupted() && socket.isConnected()) {
+                String message = in.readUTF();
+                handleMessage(message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            server.removeAuthorizedClientFromList(this);
+        }
     }
 
     private void authorize() {

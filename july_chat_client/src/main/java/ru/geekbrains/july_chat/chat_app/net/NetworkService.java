@@ -1,8 +1,6 @@
 package ru.geekbrains.july_chat.chat_app.net;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class NetworkService {
@@ -12,6 +10,7 @@ public class NetworkService {
     private DataOutputStream out;
     private DataInputStream in;
     private ChatMessageService chatMessageService;
+
 
     public NetworkService(ChatMessageService chatMessageService) throws IOException {
         this.chatMessageService = chatMessageService;
@@ -25,7 +24,6 @@ public class NetworkService {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     String message = in.readUTF();
-                    System.out.println(message);
                     chatMessageService.receive(message);
                 } catch (IOException e) {
                     e.printStackTrace();

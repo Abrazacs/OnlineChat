@@ -12,6 +12,8 @@ import ru.geekbrains.july_chat.chat_app.net.ChatMessageService;
 import ru.geekbrains.july_chat.chat_app.net.MessageProcessor;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainChatController implements Initializable, MessageProcessor {
@@ -31,6 +33,9 @@ public class MainChatController implements Initializable, MessageProcessor {
     public ListView<String> contactList;
     public TextField inputField;
     public Button btnSendMessage;
+    private Chronicler chronicler;
+    private String login;
+
 
 
     public void mockAction(ActionEvent actionEvent) {
@@ -49,9 +54,9 @@ public class MainChatController implements Initializable, MessageProcessor {
         if (recipient.equals("ALL")) message = "/" + recipient + REGEX + text;
         else message = "/w" + REGEX + recipient + REGEX + text;
         chatMessageService.send(message);
+        chronicler.writeHistory(String.format("[ME] %s\n",text));
         inputField.clear();
     }
-
 
     @Override
     public void processMessage(String message) {
@@ -62,12 +67,13 @@ public class MainChatController implements Initializable, MessageProcessor {
         if (loginField.getText().isBlank() || passwordField.getText().isBlank()) return;
         chatMessageService.connect();
         chatMessageService.send("/auth" + REGEX + loginField.getText() + REGEX + passwordField.getText());
+        setLogin(loginField.getText());
     }
 
     public void sendRegister(ActionEvent actionEvent) {
-//        if (loginField.getText().isBlank() || passwordField.getText().isBlank()) return;
-//        chatMessageService.connect();
-//        chatMessageService.send("/auth"+ REGEX + loginField.getText() + REGEX + passwordField.getText());
+        if (loginField.getText().isBlank() || passwordField.getText().isBlank()) return;
+        chatMessageService.connect();
+        chatMessageService.send("/auth"+ REGEX + loginField.getText() + REGEX + passwordField.getText());
     }
 
     public void sendChangeNick(ActionEvent actionEvent) {
@@ -93,6 +99,11 @@ public class MainChatController implements Initializable, MessageProcessor {
                 loginPanel.setVisible(false);
                 mainChatPanel.setVisible(true);
                 System.out.println("authok-Done");
+                this.chronicler = new Chronicler(login);
+                List<String> chronicle = this.chronicler.readHistory();
+                for (String record : chronicle) {
+                    mainChatArea.appendText(record + System.lineSeparator());
+                }
                 break;
             case "ERROR:":
                 showError(parsedMessage[1]);
@@ -113,6 +124,7 @@ public class MainChatController implements Initializable, MessageProcessor {
                 break;
             default:
                 mainChatArea.appendText(parsedMessage[0] + System.lineSeparator());
+                chronicler.writeHistory(parsedMessage[0]+System.lineSeparator());
         }
 
     }
@@ -149,4 +161,9 @@ public class MainChatController implements Initializable, MessageProcessor {
         mainChatPanel.setVisible(false);
         changePasswordPanel.setVisible(true);
     }
+
+    private String setLogin (String login){
+        return this.login = login;
+    }
+
 }
